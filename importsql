@@ -1,0 +1,14 @@
+#!/bin/bash
+
+#
+# Imports a Drupal 8 database to current site and prepares for dev.
+#
+
+echo "💥  Dropping database."
+drush sql-drop --yes >/dev/null
+
+echo "📦  Importing database."
+drush sql-sync $1 @self
+
+echo "🛠  Importing dev settings."
+drush csim development

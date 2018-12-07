@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo "🐌 Generating report"
+drush aa --html --bootstrap --detail --skip=insights > ~/Sites/reports/${PWD##*/}.html
+open -a firefox -g http://reports.dev/${PWD##*/}

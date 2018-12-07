@@ -1,0 +1,67 @@
+#!/bin/bash
+
+##
+# @file
+# Script to start a theming session
+#
+# - Takes a theme folder argument
+# - Stops gulp & grunt
+# - Runs gulp or grunt
+# - Uses bundler if available
+##
+
+while getopts s flag; do
+  case "${flag}" in
+    s)
+    startsublime='true'
+    shift
+    ;;
+  esac
+done
+
+# Terminate all running compilers
+killgrunt
+
+# If folder argument is given, navigate there
+if [ "$1" != "" ]; then
+	cd "$1" || exit
+fi
+
+# Start sublime text editor
+if [ $startsublime ]
+then
+  subl .
+fi
+
+# See if this is a grunt or gulp project
+for file in ./[Gg]*file\.js ; do
+  if [ -e "$file" ] ; then
+    if [[ "$file" == "./Gruntfile.js" ]]; then
+      compiler="grunt"
+    fi
+    if [[ "$file" == "./Gulpfile.js" ]]; then
+      compiler="gulp"
+    fi
+    if [[ "$file" == "./gulpfile.js" ]]; then
+      compiler="gulp"
+    fi
+  fi
+done
+
+# See if bundler is used
+if [ -f "Gemfile" ];
+then
+    # See if bundler gems are installed
+    if [ ! -f "Gemfile.lock" ];
+        then
+        # Install bundler gems
+        bundle install
+    fi
+    # Start compiler with bundler
+    echo "🐗  Running $compiler with bundler"
+    bundle exec $compiler watch
+else
+    # Start compiler without bundler
+    echo "🐗  Running $compiler (no bundler)"
+    $compiler watch
+fi

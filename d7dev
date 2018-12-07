@@ -1,0 +1,19 @@
+#!/bin/bash
+
+#
+# Prepares a Drupal 7 Prod db for local development on vargant box
+#
+echo "🛠  Preparing for dev (D7)"
+d7rush updatedb --yes
+d7rush pm-disable tfa memcache smtp shield memcache_admin varnish --yes
+d7rush pm-enable maillog diff views_ui dblog devel stage_file_proxy ds_ui --yes
+d7rush variable-set preprocess_js 0 --yes
+d7rush variable-set preprocess_css 0 --yes
+d7rush variable-set theme_debug 1 --yes
+d7rush variable-set maillog_send 0 --yes
+#d7rush role-add-perm 'anonymous user' 'access devel information'
+#d7rush role-add-perm 'authenticated user' 'access devel information'
+d7rush cache-clear all
+echo "😎  Anonymizing"
+vagrant ssh -c "cd /var/www && ./anonymise.sh"
+echo "🎸  Ready to rock!"

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+#
+# Performs a drush commmand inside a vagrant box
+#
+command="cd /var/www/web && /var/www/vendor/drush/drush/drush $@"
+vagrant ssh -c "$command"

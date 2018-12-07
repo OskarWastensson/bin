@@ -1,0 +1,2 @@
+#!/bin/bash
+lessc $1.less --clean-css="--s1 --advanced --compatibility=ie8" > $1.css

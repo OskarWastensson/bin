@@ -1,0 +1,12 @@
+#!/bin/bash
+
+
+
+
+
+# See if this is a grunt or gulp project
+for file in *
+do
+  echo $file
+done
+

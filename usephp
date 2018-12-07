@@ -1,0 +1,8 @@
+#!/bin/bash
+
+current=$(readlink /usr/local/bin/php | sed "s/.*php\([0-9][0-9]\).*/\1/")
+brew services stop php$current
+brew unlink php$current
+brew link php$1
+brew services start php$1
+php -v

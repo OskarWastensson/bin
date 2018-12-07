@@ -1,0 +1,9 @@
+#!/bin/bash
+
+#
+# Adds a ticket branch to test branch
+#
+
+git checkout dev
+git pull origin dev
+git merge --squash "ticket-$1"

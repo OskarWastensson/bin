@@ -1,0 +1,20 @@
+#!/bin/bash
+
+#
+# Uses sql-sync to reset database from prod and then resets features and rund db updates
+#
+# @param source
+# - Source as defined in aliases.drushrc.php
+#
+# @param target
+# - Target as defined in local.aliases.drushrc.php
+#
+echo "💥  Dropping database"
+drush sql-drop --yes
+echo "📦  Importing database"
+drush sql-sync $1 $2
+d7dev
+echo "🎛  Reverting and updating"
+drush fra --yes
+drush updb
+drush fra --yes

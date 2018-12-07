@@ -1,0 +1,8 @@
+#!/bin/bash
+#
+#  @file
+#   Makes a copy of Drupals .htaccess called .htaccess.dev
+#   where top domains are replaced by .dev and Rewrite is configured
+#   for VirtualDocumentRoot.
+#
+sed -e 's:# \(RewriteBase /$\):\1:' -e 's:\.se:\.dev:' .htaccess > .htaccess.dev

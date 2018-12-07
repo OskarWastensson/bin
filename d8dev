@@ -1,0 +1,15 @@
+#!/bin/bash
+
+#
+# Prepares a Drupal 8 Prod db for local development
+#
+echo "🛠  Preparing for dev (D8)"
+drush pm-uninstall tfa memcache smtp shield memcache_admin varnish -y
+#drush variable-set maillog_send 0 --yes >/dev/null
+#drush role-add-perm 'anonymous user' 'access devel information'
+#drush role-add-perm 'authenticated user' 'access devel information'
+drush cim -y
+drush csim development -y
+drush updb -y
+drush entity-updates -y
+echo "🎸  Ready to rock!"
