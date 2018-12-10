@@ -1,0 +1,6 @@
+#!/bin/bash
+
+#
+# Shows the apache erros logs in vagrant box
+#
+vagrant ssh -c "tail -n 100 /var/log/apache2/error.log"
